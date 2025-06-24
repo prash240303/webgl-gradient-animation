@@ -20,15 +20,9 @@ const Scene = () => {
   // Update colors in real-time
   useEffect(() => {
     if (materialRef.current) {
-      materialRef.current.uniforms.uColor1.value = new THREE.Color(
-        primaryColor
-      );
-      materialRef.current.uniforms.uColor2.value = new THREE.Color(
-        secondaryColor
-      );
-      materialRef.current.uniforms.uColor3.value = new THREE.Color(
-        tertiaryColor
-      );
+      materialRef.current.uniforms.uColor1.value = new THREE.Color(primaryColor);
+      materialRef.current.uniforms.uColor2.value = new THREE.Color(secondaryColor);
+      materialRef.current.uniforms.uColor3.value = new THREE.Color(tertiaryColor);
       materialRef.current.uniforms.uSpeed.value = animationSpeed;
       materialRef.current.uniforms.uIntensity.value = intensity;
     }
@@ -36,7 +30,7 @@ const Scene = () => {
 
   useEffect(() => {
     if (!mountRef.current) return;
-
+    
     // Clear any existing content first
     while (mountRef.current.firstChild) {
       mountRef.current.removeChild(mountRef.current.firstChild);
@@ -248,34 +242,39 @@ const Scene = () => {
   }, []); // Empty dependency array - only run once
 
   return (
-    <div className="fixed inset-0 w-full h-full overflow-hidden">
-      {/* Full screen Three.js canvas */}
-      <div ref={mountRef} className="w-full h-full" />
-      
-      {/* Control Panel - Fixed position */}
-      <div
-        className={`fixed top-4 right-4 z-10 bg-black/80 backdrop-blur-sm rounded-lg p-4 transition-all duration-300 ${
-          showControls ? "translate-x-0" : "translate-x-full"
-        }`}
+    <div className="w-full h-screen bg-black relative">
+      <div 
+        className="w-full h-full"
+        style={{
+          WebkitMask: 'linear-gradient(black, black)',
+          mask: 'linear-gradient(black, black)',
+          WebkitMaskSize: '80% 60%',
+          maskSize: '80% 60%',
+          WebkitMaskPosition: 'center',
+          maskPosition: 'center',
+          WebkitMaskRepeat: 'no-repeat',
+          maskRepeat: 'no-repeat'
+        }}
       >
+        <div ref={mountRef} className="w-full h-full" />
+      </div>
+      
+      {/* Control Panel */}
+      <div className={`absolute top-4 right-4 bg-black/80 backdrop-blur-sm rounded-lg p-4 transition-all duration-300 ${showControls ? 'translate-x-0' : 'translate-x-full'}`}>
         <button
           onClick={() => setShowControls(!showControls)}
-          className="absolute -left-10 top-4 bg-black/80 backdrop-blur-sm text-white p-2 rounded-l-lg hover:bg-black/90 transition-colors z-10"
+          className="absolute -left-10 top-4 bg-black/80 backdrop-blur-sm text-white p-2 rounded-l-lg hover:bg-black/90 transition-colors"
         >
-          {showControls ? "→" : "←"}
+          {showControls ? '→' : '←'}
         </button>
-
+        
         <div className="space-y-4 min-w-[250px]">
-          <h3 className="text-white font-semibold text-lg mb-4">
-            Color Controls
-          </h3>
-
+          <h3 className="text-white font-semibold text-lg mb-4">Color Controls</h3>
+          
           {/* Color Pickers */}
           <div className="space-y-3">
             <div>
-              <label className="block text-white text-sm mb-2">
-                Primary Color
-              </label>
+              <label className="block text-white text-sm mb-2">Primary Color</label>
               <input
                 type="color"
                 value={primaryColor}
@@ -283,11 +282,9 @@ const Scene = () => {
                 className="w-full h-10 rounded cursor-pointer"
               />
             </div>
-
+            
             <div>
-              <label className="block text-white text-sm mb-2">
-                Secondary Color
-              </label>
+              <label className="block text-white text-sm mb-2">Secondary Color</label>
               <input
                 type="color"
                 value={secondaryColor}
@@ -295,11 +292,9 @@ const Scene = () => {
                 className="w-full h-10 rounded cursor-pointer"
               />
             </div>
-
+            
             <div>
-              <label className="block text-white text-sm mb-2">
-                Tertiary Color
-              </label>
+              <label className="block text-white text-sm mb-2">Tertiary Color</label>
               <input
                 type="color"
                 value={tertiaryColor}
@@ -312,9 +307,7 @@ const Scene = () => {
           {/* Animation Controls */}
           <div className="space-y-3 pt-4 border-t border-gray-600">
             <div>
-              <label className="block text-white text-sm mb-2">
-                Animation Speed: {animationSpeed.toFixed(1)}
-              </label>
+              <label className="block text-white text-sm mb-2">Animation Speed: {animationSpeed.toFixed(1)}</label>
               <input
                 type="range"
                 min="0.1"
@@ -325,11 +318,9 @@ const Scene = () => {
                 className="w-full"
               />
             </div>
-
+            
             <div>
-              <label className="block text-white text-sm mb-2">
-                Wave Intensity: {intensity.toFixed(1)}
-              </label>
+              <label className="block text-white text-sm mb-2">Wave Intensity: {intensity.toFixed(1)}</label>
               <input
                 type="range"
                 min="1.0"
